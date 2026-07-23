@@ -23,10 +23,14 @@ function App() {
       });
 
       const data = await response.json();
-      setResult(data.prediction);
+      
+      // ADD THIS LINE TO DEBUG:
+      console.log("Backend Response:", data);
+
+      setResult(data);
     } catch (error) {
       console.error('Error connecting to backend:', error);
-      setResult('Error connecting to server');
+      setResult({ prediction: 'Error connecting to server' });
     } finally {
       setLoading(false);
     }
@@ -35,8 +39,9 @@ function App() {
   return (
     <div className="app-container">
       <div className="card">
-        <div className="first"><h1>SMS Spam Detector</h1>
-        <p className="subtitle">Enter a text message below to find out  its classification.</p>
+        <div className="first">
+          <h1>SMS Spam Detector</h1>
+          <p className="subtitle">Enter a text message below to find out its classification.</p>
         </div>
         <form onSubmit={handleCheck}>
           <textarea
@@ -51,8 +56,25 @@ function App() {
         </form>
 
         {result && (
-          <div className={`result-box ${result === 'Spam' ? 'spam' : 'safe'}`}>
-            <h3>Result: <span>{result}</span></h3>
+          <div className={`result-box ${result.prediction === 'Spam' ? 'spam' : 'safe'}`}>
+            <h3>Result: <span>{result.prediction}</span></h3>
+
+            {result.model_name && (
+              <div className="metrics-row">
+                <div className="metric-box">
+                  <span>Model</span>
+                  <strong>{result.model_name}</strong>
+                </div>
+                <div className="metric-box">
+                  <span>F1-Score</span>
+                  <strong>{result.f1_score}</strong>
+                </div>
+                <div className="metric-box">
+                  <span>Vectorizer</span>
+                  <strong>{result.vectorizer}</strong>
+                </div>
+              </div>
+            )}
           </div>
         )}
       </div>

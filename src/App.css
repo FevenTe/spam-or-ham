@@ -94,3 +94,32 @@ button:disabled {
   color: #5b065f;
   border: 1px solid #a7f3d0;
 }
+.metrics-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.metric-box {
+  background: rgba(0, 0, 0, 0.05);
+  padding: 10px;
+  border-radius: 8px;
+  flex: 1;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.metric-box span {
+  font-size: 0.75rem;
+  color: #666;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.metric-box strong {
+  font-size: 0.85rem;
+  color: #333;
+  margin-top: 4px;
+}
